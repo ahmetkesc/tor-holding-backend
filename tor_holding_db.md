@@ -2,7 +2,7 @@
 CREATE DATABASE tor_holding
     WITH
     OWNER = postgres
-    ENCODING = 'UTF8'
+    ENCODING = 'UTF8' 
     LC_COLLATE = 'Turkish_Turkey.1254'
     LC_CTYPE = 'Turkish_Turkey.1254'
     TABLESPACE = pg_default
