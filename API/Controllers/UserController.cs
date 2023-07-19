@@ -1,7 +1,6 @@
 ﻿using Business.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Model.Classes.App;
 using Model.Classes.Database;
 
 namespace API.Controllers;
