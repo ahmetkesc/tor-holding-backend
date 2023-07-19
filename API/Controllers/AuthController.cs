@@ -8,7 +8,7 @@ namespace API.Controllers;
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private IAuth _auth;
+    private readonly IAuth _auth;
 
     public AuthController(IAuth auth)
     {

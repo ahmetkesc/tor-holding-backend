@@ -7,7 +7,7 @@ public static class DatabaseExtensions
 {
     public static void CheckAndOpenDatabase(this DbConnection connection)
     {
-        if(connection.State!=ConnectionState.Open)
+        if (connection.State != ConnectionState.Open)
             connection.Open();
     }
 }

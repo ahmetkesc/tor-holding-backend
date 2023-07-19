@@ -9,10 +9,11 @@ namespace Business.Manager;
 
 public class AuthManager : IAuth
 {
-    private IUser _user;
-    private IUserLL _userLL;
-    private ITokenBuilder _token;
-    private static Dictionary<string, string> refreshTokens = new();
+    private static readonly Dictionary<string, string> refreshTokens = new();
+    private readonly ITokenBuilder _token;
+    private readonly IUser _user;
+    private readonly IUserLL _userLL;
+
     public AuthManager(IUser user, ITokenBuilder token, IUserLL userLl)
     {
         _user = user;
@@ -32,14 +33,13 @@ public class AuthManager : IAuth
 
             if (eposta == Constant.Supervisor && pass == srvPass)
             {
-                var srv = _token.CreateToken(new LoginParameter{Input = eposta,Password = pass});
+                var srv = _token.CreateToken(new LoginParameter { Input = eposta, Password = pass });
 
                 refreshTokens[eposta] = srv.RefreshToken;
 
                 return Result.Ok(srv);
             }
 
-           
 
             var user = _user.GetUserByEPostaAndPass(parameter.Input, parameter.Password);
 
@@ -62,7 +62,6 @@ public class AuthManager : IAuth
         }
     }
 
-
     public IResult<AccessToken> RefreshToken(RefreshToken refresh)
     {
         try
@@ -73,7 +72,6 @@ public class AuthManager : IAuth
             var token = _token.CreateToken(new LoginParameter { Input = refresh.Input, Password = string.Empty });
 
             return Result.Ok(token);
-
         }
         catch (Exception e)
         {
@@ -81,5 +79,8 @@ public class AuthManager : IAuth
         }
     }
 
-    private string ZeroFind(int value) => value <= 9 ? "0" + value : value.ToString();
+    private string ZeroFind(int value)
+    {
+        return value <= 9 ? "0" + value : value.ToString();
+    }
 }

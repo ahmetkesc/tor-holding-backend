@@ -5,25 +5,26 @@ using Business.Service;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Model.Classes.App;
-using Constant = Model.Classes.App.Constant;
 
 namespace Business.Manager;
 
 public class TokenManager : ITokenBuilder
 {
-    private DateTime _accessTokenExpiration;
     private readonly TokenConfiguration _tokenConfiguration;
+    private DateTime _accessTokenExpiration;
 
     public TokenManager(IConfiguration configuration)
     {
-        _tokenConfiguration = configuration.GetSection(Constant.AppSettingJwtOptions).Get<TokenConfiguration>() ?? new TokenConfiguration
-        {
-            AccessTokenExpiration = 750,
-            Audience = "www.torholding.com",
-            Key = "TorHoldingSecurityKey",
-            Issuer = "www.torholding.com.tr"
-        };
+        _tokenConfiguration = configuration.GetSection(Constant.AppSettingJwtOptions).Get<TokenConfiguration>() ??
+                              new TokenConfiguration
+                              {
+                                  AccessTokenExpiration = 750,
+                                  Audience = "www.torholding.com",
+                                  Key = "TorHoldingSecurityKey",
+                                  Issuer = "www.torholding.com.tr"
+                              };
     }
+
     public AccessToken CreateToken(LoginParameter parameters)
     {
         _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenConfiguration.AccessTokenExpiration);

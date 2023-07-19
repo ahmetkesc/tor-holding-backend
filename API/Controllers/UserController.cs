@@ -5,11 +5,12 @@ using Model.Classes.Database;
 
 namespace API.Controllers;
 
-[Route("user"),Authorize]
+[Route("user")]
+[Authorize]
 [ApiController]
 public class UserController : ControllerBase
 {
-    private IUser _user;
+    private readonly IUser _user;
 
     public UserController(IUser user)
     {
@@ -23,6 +24,7 @@ public class UserController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpGet("getuserbyeposta")]
     public IActionResult GetUserByEPosta(string eposta)
     {
@@ -30,6 +32,7 @@ public class UserController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpGet("getuserbyid")]
     public IActionResult GetUserByEPosta(Guid id)
     {
@@ -37,6 +40,7 @@ public class UserController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpPost("insert")]
     public IActionResult Insert(User user)
     {
@@ -44,6 +48,7 @@ public class UserController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpPost("update")]
     public IActionResult Update(User user)
     {
@@ -51,6 +56,7 @@ public class UserController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpPost("delete")]
     public IActionResult Delete(User user)
     {

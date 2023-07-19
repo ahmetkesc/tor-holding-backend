@@ -2,6 +2,6 @@
 
 public class LoginParameter
 {
-    public string Input{ get; set; }
-    public string Password{ get; set; }
+    public string Input { get; set; }
+    public string Password { get; set; }
 }

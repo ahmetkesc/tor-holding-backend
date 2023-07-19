@@ -7,10 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 builder.Services.AddControllers()
-    .AddNewtonsoftJson(option =>
-    {
-        option.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
-    });
+    .AddNewtonsoftJson(option => { option.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local; });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -31,7 +28,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseCors(b=>
+app.UseCors(b =>
     b
         .AllowAnyOrigin()
         .AllowAnyMethod()

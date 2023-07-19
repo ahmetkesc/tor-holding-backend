@@ -14,12 +14,13 @@ namespace Business.Manager;
 
 public class UserManager : IUser
 {
-    private string connectionString = "";
+    private readonly string connectionString = "";
 
     public UserManager(IConfiguration configuration)
     {
         connectionString = configuration.GetConnectionString(Constant.ConnectionName) ?? "";
     }
+
     public IResult<List<User>> GetUsers()
     {
         try
@@ -50,7 +51,8 @@ public class UserManager : IUser
             using var db = new NpgsqlConnection(connectionString);
             db.CheckAndOpenDatabase();
 
-            var result = db.QueryFirstOrDefault<User>("select * from t_user where eposta=@eposta ::text", new { eposta });
+            var result =
+                db.QueryFirstOrDefault<User>("select * from t_user where eposta=@eposta ::text", new { eposta });
 
             return Result.Ok(result);
         }
@@ -71,8 +73,9 @@ public class UserManager : IUser
             db.CheckAndOpenDatabase();
 
 
-
-            var result = db.QueryFirstOrDefault<User>("select * from t_user where eposta=@eposta ::text AND sifre=@sifre ::text", new { eposta, sifre = pass });
+            var result = db.QueryFirstOrDefault<User>(
+                "select * from t_user where eposta=@eposta ::text AND sifre=@sifre ::text",
+                new { eposta, sifre = pass });
 
             return Result.Ok(result);
         }
@@ -127,6 +130,7 @@ public class UserManager : IUser
             return Result.Message<bool>(e.Message);
         }
     }
+
     public IResult<bool> Update(User user)
     {
         try
@@ -151,6 +155,7 @@ public class UserManager : IUser
             return Result.Message<bool>(e.Message);
         }
     }
+
     public IResult<bool> Delete(User user)
     {
         try
@@ -172,6 +177,4 @@ public class UserManager : IUser
             return Result.Message<bool>(e.Message);
         }
     }
-
-
 }

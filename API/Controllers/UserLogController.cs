@@ -5,11 +5,12 @@ using Model.Classes.Database;
 
 namespace API.Controllers;
 
-[Route("userll"),Authorize]
+[Route("userll")]
+[Authorize]
 [ApiController]
 public class UserLogController : ControllerBase
 {
-    private IUserLL _userLL;
+    private readonly IUserLL _userLL;
 
     public UserLogController(IUserLL userLl)
     {
@@ -23,6 +24,7 @@ public class UserLogController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpGet("getuserlogbyeposta")]
     public IActionResult GetUserLLByEPosta(string eposta)
     {
@@ -30,6 +32,7 @@ public class UserLogController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpGet("getuserlogbyid")]
     public IActionResult GetUserByEPosta(Guid id)
     {
@@ -37,6 +40,7 @@ public class UserLogController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpPost("insert")]
     public IActionResult Insert(UserLoginLog userll)
     {
@@ -44,6 +48,7 @@ public class UserLogController : ControllerBase
         if (result.Success) return Ok(result);
         return BadRequest(result);
     }
+
     [HttpGet("delete")]
     public IActionResult Delete()
     {

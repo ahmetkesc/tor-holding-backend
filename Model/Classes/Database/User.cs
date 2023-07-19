@@ -5,8 +5,8 @@ namespace Model.Classes.Database;
 [Table("t_user")]
 public class User
 {
-    [ExplicitKey]
-    public Guid id { get; set; }
+    [ExplicitKey] public Guid id { get; set; }
+
     public string adi { get; set; }
     public string soyadi { get; set; }
     public string cep { get; set; }

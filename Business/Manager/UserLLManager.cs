@@ -14,13 +14,15 @@ namespace Business.Manager;
 
 public class UserLLManager : IUserLL
 {
-    private string connectionString = "";
-    private IUser _user;
+    private readonly IUser _user;
+    private readonly string connectionString = "";
+
     public UserLLManager(IConfiguration configuration, IUser user)
     {
         _user = user;
         connectionString = configuration.GetConnectionString(Constant.ConnectionName) ?? "";
     }
+
     public IResult<List<UserLoginLog>> GetUserLogs()
     {
         try
@@ -40,6 +42,7 @@ public class UserLLManager : IUserLL
             return Result.Message<List<UserLoginLog>>(e.Message);
         }
     }
+
     public IResult<List<UserLoginLog>> GetUserLLByEPosta(string eposta)
     {
         try
@@ -54,7 +57,8 @@ public class UserLLManager : IUserLL
 
             if (!user.Success) return Result.Message<List<UserLoginLog>>("Kullanıcı bulunamadı.");
 
-            var result = db.Query<UserLoginLog>("select * from t_user_login_log where kullanici_id=@id ::uuid", new { id = user.Data.id }).ToList();
+            var result = db.Query<UserLoginLog>("select * from t_user_login_log where kullanici_id=@id ::uuid",
+                new { user.Data.id }).ToList();
 
             return Result.Ok(result);
         }
@@ -63,6 +67,7 @@ public class UserLLManager : IUserLL
             return Result.Message<List<UserLoginLog>>(e.Message);
         }
     }
+
     public IResult<List<UserLoginLog>> GetUserLLByUserId(Guid id)
     {
         try
@@ -73,7 +78,9 @@ public class UserLLManager : IUserLL
             using var db = new NpgsqlConnection(connectionString);
             db.CheckAndOpenDatabase();
 
-            var result = db.Query<UserLoginLog>("select * from t_user_login_log where kullanici_id=id ::uuid", new { id }).ToList();
+            var result = db
+                .Query<UserLoginLog>("select * from t_user_login_log where kullanici_id=id ::uuid", new { id })
+                .ToList();
 
             return Result.Ok(result);
         }
@@ -82,6 +89,7 @@ public class UserLLManager : IUserLL
             return Result.Message<List<UserLoginLog>>(e.Message);
         }
     }
+
     public IResult<bool> Insert(UserLoginLog userll)
     {
         try
@@ -106,6 +114,7 @@ public class UserLLManager : IUserLL
             return Result.Message<bool>(e.Message);
         }
     }
+
     public IResult<bool> DeleteAll()
     {
         try

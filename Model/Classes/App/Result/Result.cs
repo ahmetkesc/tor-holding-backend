@@ -19,10 +19,10 @@ public class Result<T> : IResult<T>
         Data = data;
     }
 
-    public Result(bool success,string message)
+    public Result(bool success, string message)
     {
         Success = success;
-        Message= message;
+        Message = message;
     }
 
     public string Message { get; set; } = null!;

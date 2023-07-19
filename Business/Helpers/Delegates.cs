@@ -12,7 +12,8 @@ public class Delegates
 {
     public static Action<ContainerBuilder> ContainerDelegateBuilder(IConfiguration? configuration)
     {
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration), "Configuration was not found!");
+        if (configuration == null)
+            throw new ArgumentNullException(nameof(configuration), "Configuration was not found!");
 
         var _delegate = new Action<ContainerBuilder>(builder =>
         {
@@ -35,13 +36,14 @@ public class Delegates
 
     public static Action<JwtBearerOptions> JwtDelegateBuilder(IConfiguration? configuration)
     {
-        if (configuration == null) throw new ArgumentNullException(nameof(configuration), "Configuration was not found!");
+        if (configuration == null)
+            throw new ArgumentNullException(nameof(configuration), "Configuration was not found!");
 
         var tokenConfig = configuration.GetSection(Constant.AppSettingJwtOptions).Get<TokenConfiguration>();
 
         if (tokenConfig == null)
             throw new ArgumentNullException(nameof(TokenConfiguration), "Token configuration was not fount!");
-        
+
         var _delegate = new Action<JwtBearerOptions>(option =>
         {
             option.TokenValidationParameters = new TokenValidationParameters
@@ -58,6 +60,5 @@ public class Delegates
         });
 
         return _delegate;
-
     }
 }

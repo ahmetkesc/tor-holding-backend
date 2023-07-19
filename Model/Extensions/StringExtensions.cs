@@ -9,6 +9,7 @@ public static class StringExtensions
     {
         return string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str);
     }
+
     public static string EncryptString(this string str, string key)
     {
         var iv = new byte[16];
@@ -16,7 +17,6 @@ public static class StringExtensions
 
         using (var aes = Aes.Create())
         {
-
             aes.Key = Encoding.UTF8.GetBytes(key);
             aes.IV = iv;
             aes.Padding = PaddingMode.PKCS7;
@@ -29,12 +29,14 @@ public static class StringExtensions
             {
                 sw.Write(str);
             }
+
             bytes = ms.ToArray();
         }
 
         var result = Convert.ToBase64String(bytes);
         return result;
     }
+
     public static string DecryptString(this string cipherText, string key)
     {
         if (cipherText.IsNullOrEmpty()) return string.Empty;
@@ -44,17 +46,17 @@ public static class StringExtensions
 
         var cipherBytes = Convert.FromBase64String(cipherText);
 
-        using var aes=Aes.Create();
+        using var aes = Aes.Create();
         aes.Key = Encoding.UTF8.GetBytes(key);
         aes.IV = new byte[16];
         aes.Padding = PaddingMode.PKCS7;
         aes.Mode = CipherMode.CBC;
 
         using var ms = new MemoryStream(cipherBytes);
-        var decryptor = aes.CreateDecryptor(aes.Key,aes.IV);
+        var decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
 
         using var cs = new CryptoStream(ms, decryptor, CryptoStreamMode.Read);
-        using var sr=new StreamReader(cs,Encoding.UTF8);
+        using var sr = new StreamReader(cs, Encoding.UTF8);
         var result = sr.ReadToEnd();
 
         return result;
